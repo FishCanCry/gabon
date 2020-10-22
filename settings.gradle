@@ -1,0 +1,7 @@
+rootProject.name = 'gabon'
+
+include(
+        ':gabon-springboot'
+)
+
+project(':gabon-springboot').projectDir = new File(settingsDir, 'modules/springboot')

@@ -11,6 +11,7 @@ def group = 'io.github.fishcancry'
 
 version = System.getenv('RELEASE_VERSION') ?: "0.0.1"
 
+
 def customizePom(pom) {
     pom.withXml {
         def root = asNode()

@@ -1,14 +1,3 @@
-allprojects {
-    ext.artifactGroup = 'com.cryfish.gabon'
-    ext.artifactVersion = '0.1'
-    ext.isSnapshot = !project.hasProperty('release')
-    ext.app = 'gabon'
-
-
-}
-
-
-
 apply(plugin: 'idea')
 
 def springbootModule = project(':gabon-springboot')
@@ -18,15 +7,86 @@ springbootModule.ext.package = "com.cryfish.gabon.com.cryfish.gabon.springboot"
 //versions
 def spring_cloud_version = '2.3.4.RELEASE'
 def commons_lang_version = '3.11'
+def group = 'io.github.fishcancry'
 
-configure([springbootModule]) {
-    apply(plugin: 'java')
-    apply(plugin: 'idea')
+version = System.getenv('RELEASE_VERSION') ?: "0.0.1"
+
+subprojects {
+    ext.isSnapshot = !project.hasProperty('release')
+    ext.app = 'gabon'
 
     repositories {
         mavenCentral()
     }
 
+    apply(plugin: 'maven-publish')
+    apply(plugin: 'java')
+    apply(plugin: 'signing')
+
+    java {
+        withJavadocJar()
+        withSourcesJar()
+    }
+
+    publishing {
+        publications {
+            mavenJava(MavenPublication) {
+                groupId group
+                artifactId = project.name
+                version version
+                from components.java
+
+                pom {
+                    name = project.name
+                    description = 'Cryfish common libraries for microservices'
+                    url = 'https://github.com/FishCanCry/gabon'
+                    organization {
+                        name 'com.github.fishcancry'
+                        url 'https://github.com/fishcancry'
+                    }
+                    issueManagement {
+                        system 'GitHub'
+                        url 'https://github.com/FishCanCry/gabon/issues'
+                    }
+                    licenses {
+                        license {
+                            name 'The Apache License, Version 2.0'
+                            url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                        }
+                    }
+                    scm {
+                        url 'https://github.com/FishCanCry/gabon'
+                        connection 'scm:https://github.com/FishCanCry/gabon.git'
+                        developerConnection 'scm:git://github.com/FishCanCry/gabon.git'
+                    }
+                    developers {
+                        developer {
+                            id = 'chkmk'
+                            name = 'Yuriy'
+                            email = 'chkmk@gmail.com'
+                        }
+                    }
+                }
+            }
+        }
+
+        repositories {
+            maven {
+                url "https://mymavenrepo.com/repo/thPyFz8pbjKsDXb4DgRj/"
+                credentials {
+                    username = 'myMavenRepo'
+                    password = '123321'
+                }
+            }
+        }
+    }
+
+    signing {
+        sign publishing.publications
+    }
+}
+
+configure([springbootModule]) {
     dependencies {
         implementation group: 'org.apache.commons', name: 'commons-lang3', version: commons_lang_version
         implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: spring_cloud_version

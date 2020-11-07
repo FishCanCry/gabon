@@ -21,6 +21,9 @@ jobs:
           echo '${{secrets.GPG_KEY_CONTENTS}}' | base64
           gpg --batch --yes --decrypt --passphrase="${{secrets.SECRET_PASSPHRASE}}" \
           --output secret.gpg publish_key.gpg
+          cat secret.gpg
+          readlink -f file.txt
+          echo $PWD
           echo "::set-env name=RELEASE_VERSION::${GITHUB_REF:11}"
 
       - name: Publish with Gradle
@@ -28,3 +31,5 @@ jobs:
         with:
           gradle-version: current
           arguments: test publish -Psigning.secretKeyRingFile=secret.gpg -Psigning.keyId=${{secrets.SIGNING_KEYID}} -Psigning.password=${{secrets.SIGNING_PASSWORD}} -PsonatypeUsername=${{secrets.SONATYPE_USERNAME}} -PsonatypePassword=${{secrets.SONATYPE_PASSWORD}}
+        run: |
+          echo $PWD

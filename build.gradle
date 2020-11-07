@@ -74,8 +74,8 @@ subprojects {
             maven {
                 url "https://oss.sonatype.org/service/local/staging/deploy/maven2"
                 credentials {
-                    username 'chkmk'
-                    password '1sTDokli&rlTN'
+                    username sonatypeUsername
+                    password sonatypePassword
                 }
             }
         }

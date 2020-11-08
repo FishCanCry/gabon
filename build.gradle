@@ -74,8 +74,8 @@ subprojects {
             maven {
                 url "https://oss.sonatype.org/service/local/staging/deploy/maven2"
                 credentials {
-                    username sonatypeUsername
-                    password sonatypePassword
+                    username project.hasProperty("sonatypeUsername") ? sonatypeUsername : System.getenv('SONATYPE_USERNAME')
+                    password project.hasProperty("sonatypePassword") ? sonatypePassword : System.getenv('SONATYPE_PASSWORD')
                 }
             }
         }

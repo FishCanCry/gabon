@@ -9,9 +9,9 @@ def spring_cloud_version = '2.3.4.RELEASE'
 def commons_lang_version = '3.11'
 def group = 'io.github.fishcancry.gabon'
 
-version = System.getenv('RELEASE_VERSION') ?: "0.0.1"
-
 subprojects {
+    version = System.getenv('RELEASE_VERSION') ?: "0.0.1"
+
     ext.isSnapshot = !project.hasProperty('release')
     ext.app = 'gabon'
 

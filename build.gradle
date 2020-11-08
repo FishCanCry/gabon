@@ -7,7 +7,7 @@ springbootModule.ext.package = "com.cryfish.gabon.com.cryfish.gabon.springboot"
 //versions
 def spring_cloud_version = '2.3.4.RELEASE'
 def commons_lang_version = '3.11'
-def group = 'io.github.fishcancry'
+def group = 'io.github.fishcancry.gabon'
 
 version = System.getenv('RELEASE_VERSION') ?: "0.0.1"
 
@@ -32,7 +32,7 @@ subprojects {
         publications {
             mavenJava(MavenPublication) {
                 groupId group
-                artifact project.name
+                artifactId project.name
                 version version
 
                 pom {

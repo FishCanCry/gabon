@@ -18,12 +18,8 @@ jobs:
       - name: Prepare to publish
         run: |
           echo '${{secrets.GPG_KEY_CONTENTS}}' | base64 -d > publish_key.gpg
-          echo '${{secrets.GPG_KEY_CONTENTS}}' | base64
-          gpg --batch --yes --decrypt --passphrase="${{secrets.SECRET_PASSPHRASE}}" \
+          gpg --quiet --batch --yes --decrypt --passphrase="${{secrets.SECRET_PASSPHRASE}}" \
           --output secret.gpg publish_key.gpg
-          cat secret.gpg
-          readlink -f file.txt
-          echo $PWD
           echo "::set-env name=RELEASE_VERSION::${GITHUB_REF:11}"
 
       - name: Publish with Gradle

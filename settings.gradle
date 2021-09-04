@@ -1,7 +1,9 @@
 rootProject.name = 'gabon'
 
 include(
-        ':gabon-springboot'
+        ':gabon-springboot',
+        ':gabon-core'
 )
 
 project(':gabon-springboot').projectDir = new File(settingsDir, 'modules/springboot')
+project(':gabon-core').projectDir = new File(settingsDir, 'modules/core')

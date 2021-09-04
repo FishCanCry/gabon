@@ -1,6 +1,7 @@
 apply(plugin: 'idea')
 
 def springbootModule = project(':gabon-springboot')
+def coreModule = project(':gabon-core')
 springbootModule.ext.description = "Gabon com.cryfish.gabon.springboot"
 springbootModule.ext.package = "com.cryfish.gabon.com.cryfish.gabon.springboot"
 
